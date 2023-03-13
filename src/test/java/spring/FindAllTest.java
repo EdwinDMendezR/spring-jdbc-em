@@ -13,7 +13,7 @@ import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = { })
-public class SpringJdbcTest {
+public class FindAllTest {
 
     @Autowired
     private CustomerDao customerDao;
