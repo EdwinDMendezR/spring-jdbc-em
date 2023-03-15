@@ -1,47 +1,33 @@
 package spring;
 
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import spring.jdbc.Customer;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = { })
-public class FindByIdTest {
+public class LikeTest {
+
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
-    static class CustomerRowMapper implements RowMapper<Customer> {
-        @Override
-        public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return Customer.builder()
-                    .id(rs.getInt("id"))
-                    .name(rs.getString("name"))
-                    .email(rs.getString("email"))
-                    .build();
-        }
-    }
-
 
     @Test
     public void methodTest() {
 
         // Arrange
-        int customerId = 1;
+        String customerName = "omerA";
 
         // Act
-        Customer resultado = jdbcTemplate.queryForObject("select * from customer where id=?",
-                new Object[]{customerId},
-                new CustomerRowMapper()
+        Customer resultado = jdbcTemplate.queryForObject("select * from customer where name like ?",
+                new Object[]{ "%" + customerName + "%"},
+                new FindByIdTest.CustomerRowMapper()
         );
 
         // Assert
